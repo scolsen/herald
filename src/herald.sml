@@ -1,12 +1,5 @@
-(* Product *)
-infix 0 &
-infix 4 o&o 
+val id : 'a -> 'a = 
+  fn x => x
 
-datatype ('a, 'b) prod = & of 'a * 'b
-
-fun f o&o g = fn x => (f x) & (g x)
-
-(* Either *)
-datatype ('a, 'b) coprod = Left of 'a | Right of 'b
-
-
+val flip : ('a -> 'b -> 'c) -> ('b -> 'a -> 'c) =
+  fn f (x, y) => f (y, x)
