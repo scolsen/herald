@@ -10,7 +10,7 @@ signature FUNCTOREX =
   sig
     structure Functor : FUNCTOR
     val replace : 'a -> 'b Functor.t -> 'a Functor.t
-    val ~fmap   : 'a Functor.t -> ('a -> 'b) -> 'b Functor.t
+    val flipmap : 'a Functor.t -> ('a -> 'b) -> 'b Functor.t
     val void    : 'a Functor.t -> unit Functor.t 
   end
 
@@ -19,7 +19,7 @@ functor FunctorEx(structure Functor : FUNCTOR) : FUNCTOREX =
     structure Functor = Functor
     open Functor
 
-    fun replace x = (fmap o const) x
-    fun ~fmap x f = (flip fmap) x f
-    fun void x = replace () x
+    fun replace x   = (fmap o const) x
+    fun flipmap f x = flip fmap f x
+    fun void x      = replace () x
   end
