@@ -11,4 +11,4 @@ structure ListEx = FunctorEx (ListFunctor)
 
 val l = [1, 2, 3]
 
-val _ = print (hd (ListEx.replace (l, "hello")))
+val _ = print (hd (ListEx.replace l "hello"))

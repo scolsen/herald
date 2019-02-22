@@ -20,14 +20,15 @@ functor FunctorEx(Functor : FUNCTOR) =
     structure Functor = Functor
     open Functor
 
-    fun fmap2 (x, y) 
-      : 'a f
+    fun fmap2 (x:'a f) (y:('a -> 'b)) 
+      : 'b f
       = fmap y x
-    fun replace (x : 'b f, y : 'a) 
+    
+    fun replace (x:'b f) (y:'a) 
       : 'a f
       = fmap (const y) x
-
-    fun void (x : 'a f) 
+    
+    fun void (x:'a f) 
       : unit f
-      = replace (x, ())
+      = replace x ()
   end
