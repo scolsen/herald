@@ -1,25 +1,33 @@
 signature FUNCTOR = 
   sig
-    type 'a t
+    type 'a f
     
-    val identity : 'a t
-    val fmap     : ('a -> 'b) -> 'a t -> 'b t
+    val fmap : ('a -> 'b) -> 'a f -> 'b f
   end
 
 signature FUNCTOREX =
   sig
     structure Functor : FUNCTOR
-    val replace : 'a -> 'b Functor.t -> 'a Functor.t
-    val flipmap : 'a Functor.t -> ('a -> 'b) -> 'b Functor.t
-    val void    : 'a Functor.t -> unit Functor.t 
+    type 'a f = 'a Functor.f
+
+    val fmap2   : 'a f -> ('a -> 'b) -> 'b f
+    val replace : 'b f -> 'a -> 'a f
+    val void    : 'a f -> unit f
   end
 
-functor FunctorEx(structure Functor : FUNCTOR) : FUNCTOREX =
+functor FunctorEx(Functor : FUNCTOR) =
   struct
     structure Functor = Functor
     open Functor
 
-    fun replace x   = (fmap o const) x
-    fun flipmap f x = flip fmap f x
-    fun void x      = replace () x
+    fun fmap2 (x, y) 
+      : 'a f
+      = fmap y x
+    fun replace (x : 'b f, y : 'a) 
+      : 'a f
+      = fmap (const y) x
+
+    fun void (x : 'a f) 
+      : unit f
+      = replace (x, ())
   end
