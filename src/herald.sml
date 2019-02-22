@@ -1,5 +1,12 @@
-val id : 'a -> 'a = 
-  fn x => x
+(* Base *)
+fun id (x : 'a) 
+  : 'a 
+  = x
 
-val flip : ('a -> 'b -> 'c) -> ('b -> 'a -> 'c) =
-  fn f (x, y) => f (y, x)
+fun flip (f : ('a -> 'b -> 'c)) 
+  : ('b -> 'a -> 'c)
+  = fn x => fn y => f y x
+
+fun const (x : 'a) 
+  : ('b -> 'a)
+  = fn (y) => x
