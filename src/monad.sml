@@ -18,8 +18,6 @@ signature MONADEX =
     val bind2    : ('a -> 'b m) -> 'a m -> 'b m
     val ignore   : 'a m -> 'b m -> 'b m 
     val fail     : string -> 'a m
-    val mapm     : ('a -> 'b m) -> 'a list -> ('b list) m
-    val sequence : ('a m) list -> ('a list) m
     
     val liftm    : ('a -> 'b) -> 'a m -> 'b m
     val liftm'   : ('a -> 'b -> 'c) -> 'a m -> 'b m -> 'c m
@@ -49,19 +47,6 @@ functor MonadEx (Monad : MONAD) : MONADEX =
     fun fail (s:string) 
       : 'a m
       = raise MonadicException s
-
-    fun sequence (ms:('a m) list) 
-      : ('a list) m
-      = let
-          (* We accept a tuple here because of the signature of List.foldr *)
-          fun k (m, m') = bind m (fn (x) => bind m' (fn (xs) => return (x::xs)))
-        in
-          List.foldr k (return []) ms
-        end
-
-    fun mapm (f:('a -> 'b m)) (xs: 'a list)
-      : ('b list) m
-      = sequence (map f xs)
 
     fun liftm (f:('a -> 'b)) (m:'a m)
       : 'b m
