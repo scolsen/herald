@@ -3,6 +3,6 @@ $(SML_LIB)/basis/basis.mlb
 src/herald.sml
 src/functor.sml
 src/applicative.sml
-(* src/monad.sml *)
+src/monad.sml
 
 test/list.sml

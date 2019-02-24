@@ -33,3 +33,13 @@ structure ListAPP : APPLICATIVE =
 val gs = [(fn x => x + 1), (fn y => y * 2)]
 
 val _ = print (String.concatWith ", " (map Int.toString (ListAPP.apply gs l)))
+
+structure ListMon : MONAD = 
+  struct
+    structure Applicative = ListAPP
+    type 'a m = 'a list 
+
+    fun bind (m:'a m) (f: 'a -> 'b m) 
+      : 'b m
+      = foldr (concat o f) [] m
+  end
