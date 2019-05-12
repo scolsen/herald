@@ -1,3 +1,4 @@
+open Herald
 signature FUNCTOR = 
   sig
     type 'a f

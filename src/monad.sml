@@ -1,5 +1,6 @@
 (* Monads *)
 
+open Herald
 signature MONAD = 
   sig
     structure Applicative : APPLICATIVE 

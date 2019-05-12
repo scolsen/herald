@@ -1,3 +1,4 @@
+open Herald
 signature APPLICATIVE =
   sig
     structure Functor : FUNCTOR 
