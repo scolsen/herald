@@ -1,13 +1,12 @@
 (* Base *)
 
-infix 0 $
 infix 0 &
 
 signature HERALD =
   sig 
     type ('a, 'b) product 
     type ('a, 'b) either 
-    val $ : ('a -> 'b) * 'a -> 'b
+    
     val id : 'a -> 'a
     val flip : ('a -> 'b -> 'c) -> ('b -> 'a -> 'c)
     val const : 'a -> ('b -> 'a)
@@ -21,7 +20,6 @@ structure Herald : HERALD =
     datatype ('a, 'b) product = & of 'a * 'b
     datatype ('a, 'b) either = Left of 'a | Right of 'b
 
-    fun f $ x = f x
     fun id x = x
     fun flip f = fn x => fn y => f y x
     fun const x = fn y => x 
